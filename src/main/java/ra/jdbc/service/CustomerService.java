@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
-    public List<Customer> findAll(){
+    public List<Customer> findByPageAndSize(int page, int size){
         Connection conn = ConnectDB.getConnection();
         List<Customer> customers = new ArrayList<>();
         try{
-            CallableStatement call = conn.prepareCall("{call GET_ALL_CUSTOMER()}");
+            CallableStatement call = conn.prepareCall("{call getListCustomerByPageAndSize(?,?)}");
+            call.setInt(1,page);
+            call.setInt(2,size);
             ResultSet rs = call.executeQuery();
             while (rs.next()){
                 Customer c = new Customer();

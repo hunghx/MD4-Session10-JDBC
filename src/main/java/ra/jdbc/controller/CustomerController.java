@@ -47,8 +47,21 @@ public class CustomerController extends HttpServlet {
     }
     protected void showListCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // lấy ra dnah sách
-        List<Customer> customers = customerService.findAll();
+        // Lấy ra số trang hiện tại
+        int page = Integer.parseInt(request.getParameter("page"));
+
+        // Lấy ra số lượng sp trên 11 trang
+        int size = Integer.parseInt(request.getParameter("size"));
+            // giả sử có 6 người
+        // tính tổng số trang
+        int count = 6;
+        int totalPage = ((int)(6/size))+1;
+        List<Customer> customers = customerService.findByPageAndSize(page,size);
+
         request.setAttribute("customers",customers);
+        request.setAttribute("page",page);
+        request.setAttribute("size",size);
+        request.setAttribute("totalPage",totalPage);
         request.getRequestDispatcher("/WEB-INF/views/list.jsp").forward(request,response);
     }
     @Override

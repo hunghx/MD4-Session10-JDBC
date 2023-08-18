@@ -33,7 +33,12 @@
             <td><a onclick="return confirm('Bạn có chắc muốn xóa không?')"  href="/CustomerController?action=DELETE&id=${c.id}">Delete</a></td>
         </tr>
     </c:forEach>
-
+    <c:if test="${page>0}">
+        <a href="/CustomerController?action=GETALL&page=${page-1}&size=${size}">Prev</a>
+    </c:if>
+    <c:if test="${page<totalPage-1}">
+        <a href="/CustomerController?action=GETALL&page=${page+1}&size=${size}">Next</a>
+    </c:if>
     </tbody>
 </table>
 </body>
